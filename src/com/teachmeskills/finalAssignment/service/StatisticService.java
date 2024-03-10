@@ -13,6 +13,10 @@ import static com.teachmeskills.finalAssignment.consts.statistics.StatisticsMess
 public class StatisticService {
 
     public static void getFullStatistics() {
+        FileService.appendFile(STATISTICS_FILE_PATH, String.format(ORDERS_STATISTICS_MESSAGE, Statistics.getOrderTotalSum()));
+        FileService.appendFile(STATISTICS_FILE_PATH, String.format(BILLS_STATISTICS_MESSAGE, Statistics.getBillTotalSum()));
+        FileService.appendFile(STATISTICS_FILE_PATH, String.format(INVOICES_STATISTICS_MESSAGE, Statistics.getInvoiceTotalSum()));
+        FileService.appendFile(STATISTICS_FILE_PATH, String.format(TOTAL_AMOUNT_STATISTICS_MESSAGE, Statistics.getTotalSum()));
         System.out.println(DIVIDING_LINE);
         System.out.println(String.format(ORDERS_STATISTICS_MESSAGE, Statistics.getOrderTotalSum()));
         System.out.println(String.format(BILLS_STATISTICS_MESSAGE, Statistics.getBillTotalSum()));

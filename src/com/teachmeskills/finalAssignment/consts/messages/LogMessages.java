@@ -11,4 +11,5 @@ public interface LogMessages {
     String VALID_FILE_MESSAGE = "Valid file: \"%s\"";
     String VALID_LINE_MESSAGE = "Valid line: \"%s\". Line contains total amount.";
     String AMOUNT_IN_CURRENCY = "Amount in \"%s\": \"%f\"";
+    String MOVED_FILE_MESSAGE = "Moved file \"%s\" to \"%s\".";
 }

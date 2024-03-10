@@ -6,9 +6,7 @@ import com.teachmeskills.finalAssignment.validation.FileValidator;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,7 +40,7 @@ public class FileService {
         try {
             return Files.walk(Paths.get(path))
                     .filter(Files::isRegularFile)
-                    .filter(fileName -> isFileValid(fileName.getFileName().toString()))
+                    .filter(file -> getFileIfFileIsValid(file.toFile()))
                     .map(Path::toFile)
                     .toList();
         } catch (FileNotFoundException e) {
@@ -53,14 +51,15 @@ public class FileService {
         return null;
     }
 
-    private static boolean isFileValid(String fileName) {
+    private static boolean getFileIfFileIsValid(File file) {
         try {
-            if (FileValidator.isFileValid(fileName)) {
-                System.out.println(String.format(VALID_FILE_MESSAGE, fileName));
+            if (FileValidator.isFileValid(file.getName())) {
+                System.out.println(String.format(VALID_FILE_MESSAGE, file.getName()));
                 return true;
             }
         } catch (InvalidFileException e) {
             System.out.println(e.getMessage());
+            moveFile(file, INVALID_FILES_FOLDER_PATH);
         }
         return false;
     }
@@ -113,6 +112,29 @@ public class FileService {
             return EUR;
         } else {
             return USD;
+        }
+    }
+
+    private static void moveFile(File file, String path) {
+        File invalidFilesPackage = new File(INVALID_FILES_FOLDER);
+        if (!invalidFilesPackage.exists()){
+            invalidFilesPackage.mkdirs();
+        }
+        try {
+            Files.move(Paths.get(file.getPath()), Paths.get(path + file.getName()), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println(String.format(MOVED_FILE_MESSAGE, file.getPath(), path + file.getName()));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void appendFile(String path, String value) {
+        try {
+            value += "\n";
+            Files.write(Path.of(path), value.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            FileService.appendFile(ERROR_LOG_FILE_PATH, e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }
