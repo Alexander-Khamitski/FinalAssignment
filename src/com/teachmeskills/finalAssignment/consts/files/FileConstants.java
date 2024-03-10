@@ -13,7 +13,13 @@ public interface FileConstants {
     List<String> VALID_FILE_TYPES = Arrays.asList(ORDER, INVOICE, BILL);
     String INVALID_FILES_FOLDER = "invalidFiles";
     String INVALID_FILES_FOLDER_PATH = "invalidFiles/";
+    String LOG_DIR = "log";
+    String STATISTICS_DIR = "statistics";
+    String LOG_FILE_NAME = "execution_log.txt";
+    String ERROR_LOG_FILE_NAME = "error_log.txt";
+    String STATISTICS_FILE_NAME = "final_statistics.txt";
     String LOG_FILE_PATH = "log/execution_log.txt";
-    String ERROR_LOG_FILE_PATH = "log/execution_log.txt";
+    String ERROR_LOG_FILE_PATH = "log/error_log.txt";
     String STATISTICS_FILE_PATH = "statistics/final_statistics.txt";
+    String STATISTICS_DIR_MESSAGE = "Statistics dir: \"%s\"";
 }

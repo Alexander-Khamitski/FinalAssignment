@@ -2,6 +2,7 @@ package com.teachmeskills.finalAssignment.service;
 
 import com.teachmeskills.finalAssignment.exception.InvalidFileException;
 import com.teachmeskills.finalAssignment.session.Session;
+import com.teachmeskills.finalAssignment.util.Logger;
 import com.teachmeskills.finalAssignment.validation.FileValidator;
 
 import java.io.*;
@@ -24,7 +25,7 @@ public class FileService {
             List<File> files = getValidFileList(path);
             files.forEach(
                     file -> {
-                        System.out.println(String.format(READING_FILE_MESSAGE, file.getPath()));
+                        Logger.info(String.format(READING_FILE_MESSAGE, file.getPath()));
                         String fileType = getFileType(file);
                         if (fileType != null) {
                             readFileAndAppendStatistics(file.getPath(), fileType);
@@ -32,7 +33,7 @@ public class FileService {
                     }
             );
         } else {
-            System.out.println(EXPIRED_SESSION_MESSAGE);
+            Logger.error(EXPIRED_SESSION_MESSAGE);
         }
     }
 
@@ -44,9 +45,9 @@ public class FileService {
                     .map(Path::toFile)
                     .toList();
         } catch (FileNotFoundException e) {
-            System.out.println(String.format(FILE_NOT_FOUND_EXCEPTION_MESSAGE, path));
+            Logger.error(String.format(FILE_NOT_FOUND_EXCEPTION_MESSAGE, path));
         } catch (IOException e) {
-            System.out.println(String.format(IO_EXCEPTION_MESSAGE, e.getMessage()));
+            Logger.error(String.format(IO_EXCEPTION_MESSAGE, e.getMessage()));
         }
         return null;
     }
@@ -54,11 +55,11 @@ public class FileService {
     private static boolean getFileIfFileIsValid(File file) {
         try {
             if (FileValidator.isFileValid(file.getName())) {
-                System.out.println(String.format(VALID_FILE_MESSAGE, file.getName()));
+                Logger.info(String.format(VALID_FILE_MESSAGE, file.getName()));
                 return true;
             }
         } catch (InvalidFileException e) {
-            System.out.println(e.getMessage());
+            Logger.warn(e.getMessage());
             moveFile(file, INVALID_FILES_FOLDER_PATH);
         }
         return false;
@@ -69,10 +70,10 @@ public class FileService {
         Matcher m = p.matcher(file.getName().toLowerCase());
         if (m.find()) {
             String fileType = m.group();
-            System.out.println(String.format(FILE_TYPE, fileType));
+            Logger.info(String.format(FILE_TYPE, fileType));
             return fileType;
         } else {
-            System.out.println(String.format(INVALID_FILE_TYPE_MESSAGE, file.getPath()));
+            Logger.warn(String.format(INVALID_FILE_TYPE_MESSAGE, file.getPath()));
         }
         return null;
     }
@@ -84,11 +85,11 @@ public class FileService {
                     line -> StatisticService.appendStatisticIfLineContainsTotalAmount(fileType, line)
             );
         } catch (FileNotFoundException e) {
-            System.out.println(String.format(FILE_NOT_FOUND_EXCEPTION_MESSAGE, path));
+            Logger.error(String.format(FILE_NOT_FOUND_EXCEPTION_MESSAGE, path));
         } catch (IOException e) {
-            System.out.println(String.format(IO_EXCEPTION_MESSAGE, path));
+            Logger.error(String.format(IO_EXCEPTION_MESSAGE, path));
         } catch (Exception e) {
-            System.out.println(String.format(EXCEPTION_MESSAGE, e.getMessage()));
+            Logger.error(String.format(EXCEPTION_MESSAGE, e.getMessage()));
         }
     }
 
@@ -117,14 +118,14 @@ public class FileService {
 
     private static void moveFile(File file, String path) {
         File invalidFilesPackage = new File(INVALID_FILES_FOLDER);
-        if (!invalidFilesPackage.exists()){
+        if (!invalidFilesPackage.exists()) {
             invalidFilesPackage.mkdirs();
         }
         try {
             Files.move(Paths.get(file.getPath()), Paths.get(path + file.getName()), StandardCopyOption.REPLACE_EXISTING);
-            System.out.println(String.format(MOVED_FILE_MESSAGE, file.getPath(), path + file.getName()));
+            Logger.info(String.format(MOVED_FILE_MESSAGE, file.getPath(), path + file.getName()));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Logger.error(e.getMessage());
         }
     }
 
@@ -133,8 +134,23 @@ public class FileService {
             value += "\n";
             Files.write(Path.of(path), value.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
-            FileService.appendFile(ERROR_LOG_FILE_PATH, e.getMessage());
+            Logger.error(e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void createFileIfNotExist(String path, String fileName) {
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        File file = new File(path + "/" + fileName);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            Logger.error(String.format(CAN_NOT_CREATE_FILE_MESSAGE, path));
         }
     }
 }

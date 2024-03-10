@@ -11,7 +11,11 @@ public class Regex {
             case ORDER -> ORDER_TOTAL_AMOUNT_REGEX;
             case BILL -> BILL_TOTAL_AMOUNT_REGEX;
             case INVOICE -> INVOICE_TOTAL_AMOUNT_REGEX;
-            default -> throw new IllegalStateException(String.format(INVALID_FILE_TYPE_MESSAGE, fileType));
+            default -> {
+                String errorMessage = String.format(INVALID_FILE_TYPE_MESSAGE, fileType);
+                Logger.error(errorMessage);
+                throw new IllegalStateException(errorMessage);
+            }
         };
     }
 
@@ -20,7 +24,11 @@ public class Regex {
             case ORDER -> ORDER_TOTAL_AMOUNT_LINE_REGEX;
             case BILL -> BILL_TOTAL_AMOUNT_LINE_REGEX;
             case INVOICE -> INVOICE_TOTAL_AMOUNT_LINE_REGEX;
-            default -> throw new IllegalStateException(String.format(INVALID_FILE_TYPE_MESSAGE, fileType));
+            default -> {
+                String errorMessage = String.format(INVALID_FILE_TYPE_MESSAGE, fileType);
+                Logger.error(errorMessage);
+                throw new IllegalStateException(errorMessage);
+            }
         };
     }
 }

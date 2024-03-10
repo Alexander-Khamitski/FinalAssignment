@@ -10,8 +10,8 @@ public interface ErrorMessages {
     String EXPIRED_SESSION_MESSAGE = "Session was expired";
 
     //Error file messages
-    String INVALID_FILE_EXTENSION_MESSAGE = "Invalid file: \"%s\". Invalid file extension \"%s\"";
-    String INVALID_FILE_YEAR_MESSAGE = "Invalid file: \"%s\". Invalid file report period \"%s\".";
+    String INVALID_FILE_EXTENSION_MESSAGE = "Invalid file: \"%s\". Invalid file extension: \"%s\"";
+    String INVALID_FILE_YEAR_MESSAGE = "Invalid file: \"%s\". Invalid file report period: \"%s\".";
     String INVALID_FILE_PERIOD_MESSAGE = "Invalid file: \"%s\". Invalid file report period.";
     String INVALID_FILE_TYPE_MESSAGE = "Invalid file: \"%s\". Invalid file type.";
     String INVALID_LINE_MESSAGE = "Invalid line: \"%s\". Line does not contain total amount.";

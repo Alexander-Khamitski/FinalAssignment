@@ -21,16 +21,16 @@ public class Conversion {
         } else if (currencyFrom.equals(GBR) && currencyTo.equals(USD)) {
             return getConvertedAmount(amount, currencyFrom, currencyTo, GBR_TO_USD);
         } else {
-            System.out.println(String.format(WRONG_DATA_FOR_CONVERSION, amount, currencyFrom, currencyTo));
+            Logger.error(String.format(WRONG_DATA_FOR_CONVERSION, amount, currencyFrom, currencyTo));
             return amount;
         }
     }
 
     private static double getConvertedAmount(double amount, String currencyFrom, String currencyTo, double rate) {
-        System.out.println(String. format(CONVERSION_MESSAGE, amount, currencyFrom, currencyTo, rate));
-        System.out.println(String.format(AMOUNT_IN_CURRENCY, currencyFrom, amount));
+        Logger.info(String. format(CONVERSION_MESSAGE, amount, currencyFrom, currencyTo, rate));
+        Logger.info(String.format(AMOUNT_IN_CURRENCY, currencyFrom, amount));
         double converted = amount * rate;
-        System.out.println(String.format(AMOUNT_IN_CURRENCY, currencyTo, converted));
+        Logger.info(String.format(AMOUNT_IN_CURRENCY, currencyTo, converted));
         return converted;
     }
 }

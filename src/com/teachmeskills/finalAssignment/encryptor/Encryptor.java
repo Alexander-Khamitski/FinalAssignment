@@ -41,11 +41,5 @@ public final class Encryptor {
                 .mapToObj(input::charAt)
                 .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
                 .toString();
-//        for (int i = 0; i < input.length(); i++) {
-//            if (i % 2 == 0) {
-//                desaltedString += inputArray[i];
-//            }
-//        }
-//        return desaltedString;
     }
 }
