@@ -1,10 +1,11 @@
 package com.teachmeskills.finalAssignment.encryptor;
 
-import com.teachmeskills.finalAssignment.consts.EncryptorConstants;
+import com.teachmeskills.finalAssignment.consts.encryptor.EncryptorConstants;
 
 import java.util.Base64;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Encryptor {
 
@@ -29,21 +30,22 @@ public final class Encryptor {
 
         String[] inputArray = input.split("");
         String[] saltArray = salt.split("");
-        String saltedString = "";
-        for (int i = 0; i < input.length(); i++) {
-            saltedString += inputArray[i] + saltArray[i];
-        }
-        return saltedString;
+        return IntStream.range(0, input.length())
+                .mapToObj(i -> inputArray[i] + saltArray[i])
+                .collect(Collectors.joining());
     }
 
     private static String desalt(String input) {
-        char[] inputArray = input.toCharArray();
-        String desaltedString = "";
-        for (int i = 0; i < input.length(); i++) {
-            if (i % 2 == 0) {
-                desaltedString += inputArray[i];
-            }
-        }
-        return desaltedString;
+        return IntStream.range(0, input.length())
+                .filter(i -> i % 2 == 0)
+                .mapToObj(input::charAt)
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+//        for (int i = 0; i < input.length(); i++) {
+//            if (i % 2 == 0) {
+//                desaltedString += inputArray[i];
+//            }
+//        }
+//        return desaltedString;
     }
 }

@@ -1,6 +1,6 @@
 package com.teachmeskills.finalAssignment.session;
 
-import com.teachmeskills.finalAssignment.consts.EncryptorConstants;
+import com.teachmeskills.finalAssignment.consts.encryptor.EncryptorConstants;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -18,11 +18,7 @@ public final class Session {
     }
 
     public boolean isSessionAlive() {
-        if (this.accessToken.length() == 24 && this.expirationDate.after(new Date())) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.accessToken.length() == 24 && this.expirationDate.after(new Date());
     }
 
     private void setAccessToken() {

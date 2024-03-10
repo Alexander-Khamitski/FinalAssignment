@@ -1,10 +1,12 @@
 package com.teachmeskills.finalAssignment.validation;
 
-import com.teachmeskills.finalAssignment.consts.AuthConstants;
 import com.teachmeskills.finalAssignment.encryptor.Encryptor;
 import com.teachmeskills.finalAssignment.exception.WrongCredentialsException;
 import com.teachmeskills.finalAssignment.storage.StorageMock;
 import com.teachmeskills.finalAssignment.util.Credentials;
+
+import static com.teachmeskills.finalAssignment.consts.messages.ErrorMessages.EMPTY_CREDENTIALS_MESSAGE;
+import static com.teachmeskills.finalAssignment.consts.messages.ErrorMessages.WRONG_CREDENTIALS_MESSAGE;
 
 public class CredentialValidator {
 
@@ -16,12 +18,11 @@ public class CredentialValidator {
         String decodedPassword = Encryptor.decrypt(encryptedPassword);
         if (credentials.login().trim().equalsIgnoreCase(decodedLogin)
                 && credentials.password().trim().equals(decodedPassword)) {
-            System.out.println(AuthConstants.SUCCESSFUL_SIGN_IN_MESSAGE);
             return true;
         } else if (credentials.login().isEmpty() || credentials.password().isEmpty()) {
-            throw new WrongCredentialsException(AuthConstants.EMPTY_CREDENTIALS_MESSAGE);
+            throw new WrongCredentialsException(EMPTY_CREDENTIALS_MESSAGE);
         } else {
-            throw new WrongCredentialsException(AuthConstants.WRONG_CREDENTIALS_MESSAGE);
+            throw new WrongCredentialsException(WRONG_CREDENTIALS_MESSAGE);
         }
     }
 }
