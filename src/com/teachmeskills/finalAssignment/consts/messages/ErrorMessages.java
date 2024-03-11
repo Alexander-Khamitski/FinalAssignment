@@ -21,5 +21,6 @@ public interface ErrorMessages {
     String IO_EXCEPTION_MESSAGE = "Unexpected IOException: \"%s\"";
     String EXCEPTION_MESSAGE = "Unexpected Exception: \"%s\"";
 
-
+    //Path messages
+    String FOLDER_DOES_NOT_EXISTS_MESSAGE = "Folder with \"%s\" path does NOT exist.";
 }

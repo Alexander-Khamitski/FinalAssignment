@@ -15,4 +15,7 @@ public interface LogMessages {
     String AMOUNT_IN_CURRENCY = "Amount in \"%s\": \"%f\"";
     String MOVED_FILE_MESSAGE = "Moved file \"%s\" to \"%s\".";
     String CAN_NOT_CREATE_FILE_MESSAGE = "Can't create file with path: \"%s\"";
+    String ENTER_PATH_TO_FOLDER_MESSAGE = "Enter path to folder or use default (\"%s\"): ";
+    String FOLDER_EXISTS_MESSAGE = "Folder with \"%s\" path exists.";
+
 }

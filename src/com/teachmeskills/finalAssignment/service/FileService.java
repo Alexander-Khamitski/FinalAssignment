@@ -153,4 +153,15 @@ public class FileService {
             Logger.error(String.format(CAN_NOT_CREATE_FILE_MESSAGE, path));
         }
     }
+
+    public static boolean isFolderExist(String path) {
+        File dir = new File(path);
+        boolean isFolderExist = dir.exists();
+        if (isFolderExist) {
+            Logger.info(String.format(FOLDER_EXISTS_MESSAGE, path));
+        }
+        Logger.error(String.format(FOLDER_DOES_NOT_EXISTS_MESSAGE, path));
+        return isFolderExist;
+    }
+
 }

@@ -18,6 +18,7 @@ public interface FileConstants {
     String LOG_FILE_NAME = "execution_log.txt";
     String ERROR_LOG_FILE_NAME = "error_log.txt";
     String STATISTICS_FILE_NAME = "final_statistics.txt";
+    String RESOURCES_PATH = "resources/";
     String LOG_FILE_PATH = "log/execution_log.txt";
     String ERROR_LOG_FILE_PATH = "log/error_log.txt";
     String STATISTICS_FILE_PATH = "statistics/final_statistics.txt";
