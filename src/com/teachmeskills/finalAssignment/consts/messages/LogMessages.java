@@ -17,5 +17,8 @@ public interface LogMessages {
     String CAN_NOT_CREATE_FILE_MESSAGE = "Can't create file with path: \"%s\"";
     String ENTER_PATH_TO_FOLDER_MESSAGE = "Enter path to folder or use default (\"%s\"): ";
     String FOLDER_EXISTS_MESSAGE = "Folder with \"%s\" path exists.";
+    String NO_VALID_FILE_MESSAGE = "There is no valid files in \"%s\" directory.";
+    String CREATE_NEW_DIR_MESSAGE = "Creating new directory with \"%s\" path.";
+    String CREATE_NEW_FILE_MESSAGE = "Creating new file with \"%s\" path.";
 
 }
