@@ -1,7 +1,7 @@
 package com.teachmeskills.finalAssignment.validation;
 
 import com.teachmeskills.finalAssignment.exception.InvalidLineException;
-import com.teachmeskills.finalAssignment.util.Regex;
+import com.teachmeskills.finalAssignment.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +11,7 @@ import static com.teachmeskills.finalAssignment.consts.messages.ErrorMessages.IN
 public class StringValidator {
 
     public static boolean isLineContainsTotalAmount(String fileType, String fileLine) throws  InvalidLineException {
-        String regex = Regex.getLineTotalAmountRegexByFiletype(fileType);
+        String regex = RegexUtil.getLineTotalAmountRegexByFiletype(fileType);
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(fileLine.toLowerCase());
         if (m.find()) {

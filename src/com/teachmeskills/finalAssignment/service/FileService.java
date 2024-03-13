@@ -1,9 +1,11 @@
 package com.teachmeskills.finalAssignment.service;
 
 import com.teachmeskills.finalAssignment.exception.InvalidFileException;
+import com.teachmeskills.finalAssignment.exception.InvalidLineException;
 import com.teachmeskills.finalAssignment.session.Session;
 import com.teachmeskills.finalAssignment.util.Logger;
 import com.teachmeskills.finalAssignment.validation.FileValidator;
+import com.teachmeskills.finalAssignment.validation.StringValidator;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -126,7 +128,7 @@ public class FileService {
         try {
             List<String> lines = Files.readAllLines(Path.of(path), StandardCharsets.UTF_8);
             lines.forEach(
-                    line -> StatisticService.appendStatisticIfLineContainsTotalAmount(fileType, line)
+                    line -> appendStatisticIfLineContainsTotalAmount(fileType, line)
             );
         } catch (FileNotFoundException e) {
             Logger.error(String.format(FILE_NOT_FOUND_EXCEPTION_MESSAGE, path));
@@ -134,6 +136,25 @@ public class FileService {
             Logger.error(String.format(IO_EXCEPTION_MESSAGE, path));
         } catch (Exception e) {
             Logger.error(String.format(EXCEPTION_MESSAGE, e.getMessage()));
+        }
+    }
+
+    /**
+     * Appends statistics if a line of text contains total amount information.
+     * Logs messages for valid lines and updates statistics values accordingly.
+     *
+     * @param fileType The type of the file containing the line.
+     * @param line     The line of text to analyze.
+     */
+    private static void appendStatisticIfLineContainsTotalAmount(String fileType, String line) {
+        try {
+            if (StringValidator.isLineContainsTotalAmount(fileType, line)) {
+                Logger.info(String.format(VALID_LINE_MESSAGE, line));
+                double totalAmount = StatisticService.getTotalAmount(fileType, line);
+                StatisticService.setStatisticsValue(fileType, totalAmount);
+            }
+        } catch (InvalidLineException e) {
+            Logger.warn(e.getMessage());
         }
     }
 

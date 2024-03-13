@@ -1,4 +1,6 @@
-package com.teachmeskills.finalAssignment.util;
+package com.teachmeskills.finalAssignment.service;
+
+import com.teachmeskills.finalAssignment.util.Logger;
 
 import static com.teachmeskills.finalAssignment.consts.conversion.ConversionConstants.*;
 import static com.teachmeskills.finalAssignment.consts.messages.LogMessages.AMOUNT_IN_CURRENCY;
@@ -7,7 +9,7 @@ import static com.teachmeskills.finalAssignment.consts.messages.LogMessages.AMOU
  * The Conversion class provides methods for currency conversion.
  * It includes methods to convert an amount from one currency to another.
  */
-public class Conversion {
+public class ConversionService {
 
     /**
      * Converts an amount from the specified currency to USD.
@@ -18,9 +20,9 @@ public class Conversion {
      */
     public static double convertAmountIntoUsd(String currencyFrom, double amount) {
         if (currencyFrom.equals(GBR)) {
-            return Conversion.convert(amount, GBR, USD);
+            return ConversionService.convert(amount, GBR, USD);
         } else if (currencyFrom.equals(EUR)) {
-            return Conversion.convert(amount, EUR, USD);
+            return ConversionService.convert(amount, EUR, USD);
         } else {
             return amount;
         }

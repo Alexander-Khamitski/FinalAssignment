@@ -1,15 +1,11 @@
 package com.teachmeskills.finalAssignment.service;
 
-import com.teachmeskills.finalAssignment.exception.InvalidLineException;
-import com.teachmeskills.finalAssignment.util.Conversion;
 import com.teachmeskills.finalAssignment.util.Logger;
-import com.teachmeskills.finalAssignment.util.Regex;
+import com.teachmeskills.finalAssignment.util.RegexUtil;
 import com.teachmeskills.finalAssignment.util.Statistics;
-import com.teachmeskills.finalAssignment.validation.StringValidator;
 
 import static com.teachmeskills.finalAssignment.consts.messages.ErrorMessages.INVALID_FILE_TYPE_MESSAGE;
 import static com.teachmeskills.finalAssignment.consts.files.FileConstants.*;
-import static com.teachmeskills.finalAssignment.consts.messages.LogMessages.VALID_LINE_MESSAGE;
 import static com.teachmeskills.finalAssignment.consts.statistics.StatisticsMessages.*;
 
 /**
@@ -39,32 +35,13 @@ public class StatisticService {
     }
 
     /**
-     * Appends statistics if a line of text contains total amount information.
-     * Logs messages for valid lines and updates statistics values accordingly.
-     *
-     * @param fileType The type of the file containing the line.
-     * @param line     The line of text to analyze.
-     */
-    public static void appendStatisticIfLineContainsTotalAmount(String fileType, String line) {
-        try {
-            if (StringValidator.isLineContainsTotalAmount(fileType, line)) {
-                Logger.info(String.format(VALID_LINE_MESSAGE, line));
-                double totalAmount = getTotalAmount(fileType, line);
-                setStatisticsValue(fileType, totalAmount);
-            }
-        } catch (InvalidLineException e) {
-            Logger.warn(e.getMessage());
-        }
-    }
-
-    /**
      * Sets the statistics value based on the file type and total amount.
      * Updates the relevant statistics values and logs the updated values.
      *
      * @param fileType The type of the file.
      * @param value    The total amount extracted from the line.
      */
-    private static void setStatisticsValue(String fileType, Double value) {
+    public static void setStatisticsValue(String fileType, Double value) {
         switch (fileType) {
             case ORDER -> {
                 Statistics.setOrderTotalSum(Statistics.getOrderTotalSum() + value);
@@ -96,11 +73,11 @@ public class StatisticService {
      * @param fileLine The line of text containing the total amount.
      * @return The total amount converted to USD.
      */
-    private static double getTotalAmount(String fileType, String fileLine) {
-        String regex = Regex.getTotalAmountRegexByFileType(fileType);
+    public static double getTotalAmount(String fileType, String fileLine) {
+        String regex = RegexUtil.getTotalAmountRegexByFileType(fileType);
         double totalAmount = FileService.getLineTotalAmount(regex, fileType, fileLine);
         String lineCurrency = FileService.getLineCurrency(fileLine);
-        double totalAmountUsd = Conversion.convertAmountIntoUsd(lineCurrency, totalAmount);
+        double totalAmountUsd = ConversionService.convertAmountIntoUsd(lineCurrency, totalAmount);
         Logger.info(String.format(LINE_AMOUNT, totalAmountUsd));
         return totalAmountUsd;
     }

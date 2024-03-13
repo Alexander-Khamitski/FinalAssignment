@@ -7,7 +7,7 @@ import static com.teachmeskills.finalAssignment.consts.regex.RegexConstants.*;
 /**
  * The Regex class provides utility methods for retrieving regular expressions based on file types.
  */
-public class Regex {
+public class RegexUtil {
 
     /**
      * Retrieves the regular expression for extracting the total amount from a file based on its type.
