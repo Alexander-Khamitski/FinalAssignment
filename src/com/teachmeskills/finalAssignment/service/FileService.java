@@ -265,8 +265,9 @@ public class FileService {
         boolean isFolderExist = dir.exists();
         if (isFolderExist) {
             Logger.info(String.format(FOLDER_EXISTS_MESSAGE, path));
+            return true;
         }
         Logger.error(String.format(FOLDER_DOES_NOT_EXISTS_MESSAGE, path));
-        return isFolderExist;
+        return false;
     }
 }
